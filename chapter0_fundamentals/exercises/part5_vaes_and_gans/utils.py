@@ -86,12 +86,13 @@ def visualise_input(
     fig = px.scatter(df, x="dim1", y="dim2", color="label")
     fig.update_layout(height=700, width=700, title="Scatter plot of latent space dims", legend_title="Digit")
     data_range = df["dim1"].max() - df["dim1"].min()
-
+    print("Hi 2")
     # Add images to the scatter plot (optional)
     data_translated = (HOLDOUT_DATA.cpu().numpy() * 0.3081) + 0.1307
     data_as_int = (255 * data_translated).astype(np.uint8).squeeze()
+    print("Hi3")
     for i in range(10):
-        x, y = holdout_latent_vectors[i]
+        x, y = holdout_latent_vectors[i].cpu()
         fig.add_layout_image(
             source=Image.fromarray(data_as_int[i]).convert("L"),
             xref="x",
